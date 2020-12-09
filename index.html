@@ -97,10 +97,10 @@ var app = new Vue({
   data: {
     state: hatDecoded ? states[1] : states[0],
     nameOfHat: "",
-    personNext: hatDecoded.personNext : "",
+    personNext: hatDecoded && hatDecoded.personNext? hatDecoded.personNext : "",
     link: "",
-    originNamesInHat: hatDecoded.originNamesInHat || [],
-    namesInHat: hatDecoded.namesInHat || [],
+    originNamesInHat: hatDecoded && hatDecoded.originNamesInHat ? hatDecoded.originNamesInHat : [],
+    namesInHat: hatDecoded && hatDecoded.namesInHat ? hatDecoded.namesInHat : [],
     nameDrawn: "",
     inputNameAdd: "",
     inputGetName: "",
