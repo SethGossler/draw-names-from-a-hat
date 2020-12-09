@@ -109,7 +109,7 @@ var app = new Vue({
         namesInHat: this.namesInHat
       };
       var encoded = encodedJson(dto);
-      this.link = location.href + "?=" + encoded;
+      this.link = location.origin + location.pathname + "?hat=" + encoded;
     },
     getNameFromHat() {
       var inNameExists = this.originNamesInHat.find(name=> name == this.inputGetName);
