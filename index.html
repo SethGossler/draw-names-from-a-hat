@@ -23,7 +23,7 @@
       </div>
 
       <div v-if="state == 'listMade'" class="send-list view">
-        <h3>Your list is ready to go. To start it off, send this link to {{personNext }} (Yes, this could be you!)</h3>
+        <h3>Your list is ready to go. To start it off, send this link to {{this.namesToDraw[0]; }} (Yes, this could be you!)</h3>
         <a v-bind:href="link">{{link}}</a>  
       </div>
 
@@ -36,7 +36,7 @@
       <div v-if="state == 'sendLink'" class="name-found view">
         <h3> Here's the name you drew </h3>
         <h4>{{nameDrawn}}</h4>
-        <h3>Now give this link to {{personNext}}</h3>
+        <h3>Now give this link to {{this.namesToDraw[0];}}</h3>
         <a v-bind:href="link">{{link}}</a>
       </div>
 
@@ -46,7 +46,7 @@
       </div>
 
       <div v-if="state == 'youreNotNext'" class="wrong-turn view">
-        <h3> Its not your turn! Send this link to {{personNext}}.</h3>
+        <h3> Its not your turn! Send this link to {{this.namesToDraw[0];}}.</h3>
         <a v-bind:href="link">{{link}}</a>  
       </div>
 
@@ -100,7 +100,6 @@ var app = new Vue({
     states: states,
     state: hatDecoded ? states[1] : states[0],
     nameOfHat: hatDecoded && hatDecoded.nameOfHat ? hatDecoded.nameOfHat : "",
-    personNext: hatDecoded && hatDecoded.personNext ? hatDecoded.personNext : "",
     link: "",
     originNamesInHat: hatDecoded && hatDecoded.originNamesInHat ? hatDecoded.originNamesInHat : [],
     namesInHat: hatDecoded && hatDecoded.namesInHat ? hatDecoded.namesInHat : [],
@@ -135,7 +134,6 @@ var app = new Vue({
     generateNextLink() {
       var dto = {
         nameOfHat: this.nameOfHat,
-        personNext: this.personNext,
         originNamesInHat: this.originNamesInHat,
         namesInHat: this.namesInHat,
         namesToDraw: this.namesToDraw
@@ -145,7 +143,7 @@ var app = new Vue({
     },
     getNameFromHat() {
       var inNameExists = this.originNamesInHat.find(name=> name == this.inputGetName);
-      var isNext = this.personNext == inNameExists;
+      var isNext = this.namesToDraw[0] == inNameExists;
       if(inNameExists && isNext) {
         this.drawName();
         this.generateNextLink();
@@ -162,7 +160,6 @@ var app = new Vue({
       this.namesInHat = randomizeList(this.namesInHat);
       this.namesToDraw = this.namesInHat.slice().reverse();
       
-      this.personNext = this.namesToDraw[0];
       this.generateNextLink();
       
       this.state=states[5];
