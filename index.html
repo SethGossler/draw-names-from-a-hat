@@ -7,6 +7,7 @@
   <body>
     <div class="snow-layer"></div>
     <div id="app">
+      <h1> Draw Names From a Hat </h1>
       <div v-if="state == 'create'" class="create-list view">
         <h3>Name your hat</h3>
         <input v-model="nameOfHat"></input>
@@ -210,6 +211,14 @@ function randomizeList(array) {
     word-break: break-all; 
   }
  
+  h1 {
+    text-align: center;
+    color: #fff;
+    text-shadow: 0px 0px 5px #4f4aff, 0px 0px 5px #000;
+    position: relative;
+    font-size: 38px;
+  }
+  
   #app {
     position: relative;
     display: flex;
