@@ -68,9 +68,10 @@
 <script>
 var states = ["create", "getName", "sendLink", "nameNotInHat", "youreNotNext", "listMade", "emptyHat"];
 
-var search = top.window.location.search;
-var hatEncoded = search.get("hat");
-
+var params = new URLSearchParams(top.window.location.search);
+var hatEncoded = params.get("hat");
+console.log(hatEncoded);
+  
 var app = new Vue({
   el: '#app',
   data: {
