@@ -66,8 +66,32 @@
 
 <!-- SCRIPT -->
 <script>
-var states = ["create", "getName", "sendLink", "nameNotInHat", "youreNotNext", "listMade", "emptyHat"];
   
+// DTO
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+  
+function decodedJson( object ) {
+  var decode = window.atob(object);
+  return JSON.parse(decode);
+}
+
+function encodedJson( object ) {
+  var encode = JSON.stringify(object);
+  return window.btoa(encode);
+}
+
+var params = new URLSearchParams(window.location.search);
+var hatEncoded = params.get("hat");
+var hatDecoded = null;
+if(hatEncoded) {
+  hatDecoded = decodedJson(hatEncoded);
+}
+console.log("hatDecoded", hatDecoded);
+  
+// Vue Start  
+var states = ["create", "getName", "sendLink", "nameNotInHat", "youreNotNext", "listMade", "emptyHat"];
 var app = new Vue({
   el: '#app',
   data: {
@@ -130,28 +154,7 @@ var app = new Vue({
   }
 })
   
-function getRandomInt(max) {
-  return Math.floor(Math.random() * Math.floor(max));
-}
-  
-function decodedJson( object ) {
-  var decode = window.atob(object);
-  return JSON.parse(decode);
-}
 
-function encodedJson( object ) {
-  var encode = JSON.stringify(object);
-  return window.btoa(encode);
-}
-
-var params = new URLSearchParams(window.location.search);
-var hatEncoded = params.get("hat");
-var hatDecoded = null;
-debugger;
-if(hatEncoded) {
-  hadDecoded = decodedJson(hatEncoded);
-}
-console.log("hatDecoded", hatDecoded);
 
 </script>
 
