@@ -11,20 +11,19 @@
         <h3>Name your hat</h3>
         <input v-model="nameOfHat"></input>
         <h3>Add names to your hat.</h3>
-        Name: 
-        <input v-model="inputNameAdd" id="name">
-        <button v-on:click="addNameToHat()">Add</button>
+        <input v-model="inputNameAdd" id="name"><button v-on:click="addNameToHat()">Add</button>
         </br>
+        <h3> Names Added </h3>
         <ul>
           <li v-for="name in namesInHat">
             {{name}}
           </li>
         </ul>
-        <button v-on:click="generateHat()">Finish</button>
+        <button v-on:click="generateHat()">Finish List</button>
       </div>
 
       <div v-if="state == 'listMade'" class="send-list view">
-        <h3>Your list is ready to go. To start it off, send this link to {{namesToDraw[0]}} (Yes, this could be you!)</h3>
+        <h3>Your list is ready to go. To start it off, send this link to {{namesToDraw[0]}} (this could be you!)</h3>
         <a v-bind:href="link">{{link}}</a>  
       </div>
 
@@ -85,10 +84,10 @@ function encodedJson( object ) {
 var params = new URLSearchParams(window.location.search);
 var hatEncoded = params.get("hat");
 var hatDecoded = null;
+
 if(hatEncoded) {
   hatDecoded = decodedJson(hatEncoded);
 }
-console.log("hatDecoded", hatDecoded);
   
 // Vue Start  
 var states = ["create", "getName", "sendLink", "nameNotInHat", "youreNotNext", "listMade", "emptyHat"];
@@ -169,6 +168,7 @@ var app = new Vue({
   }
 })
   
+// Found from Stackoverflow
 function randomizeList(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -187,7 +187,6 @@ function randomizeList(array) {
 
   return array;
 }
-
 </script>
 
 
