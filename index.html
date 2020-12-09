@@ -3,6 +3,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
   </head>
   <body>
+    <div class="snow-layer"></div>
     <div id="app">
       <div v-if="state == 'create'" class="create-list view">
         <h3>Name your hat</h3>
@@ -200,7 +201,7 @@ function randomizeList(array) {
     background-repeat: no-repeat;
   }
 
-  body {
+  .snow-layer {
       content: "";
       position: fixed;
       top: -3000%;
@@ -216,12 +217,12 @@ function randomizeList(array) {
       -webkit-animation-iteration-count: infinite;  
   }
 
-  body:before {
+  .snow-layer:before {
     filter: blur(6px);
     opacity: 0.8;
   }
   
-  body:after {
+  .snow-layer:after {
     filter: blur(1px);
     top: -1500%;
     background-image: url(http://www.freepngimg.com/download/winter_snow/4-2-white-snow-png.png);
