@@ -1,55 +1,149 @@
-<div id="app">
+<html>
+  <body>
+    <div id="app">
+      <div v-if="state == 'create'" class="create-list view">
+        <h3>Name your hat</h3>
+        <input v-model="nameOfHat"></input>
+        <h3>Add names to your hat.</h3>
+        Name: 
+        <input v-model="inputNameAdd" id="name">
+        <button v-on:click="addNameToHat()">Add</button>
+        </br>
+        <ul>
+          <li v-for="name in namesInHat">
+            {{name}}
+          </li>
+        </ul>
+        <button v-on:click="generateHat()">Finish</button>
+      </div>
+
+      <div v-if="state == 'listMade'" class="send-list view">
+        <h3>Your list is ready to go. To start it off, send this link to {{personNext }}</h3>
+        <a v-bind:href="link">{{link}}</a>  
+      </div>
+
+      <div v-if="state == 'getName'" class="get-name view">
+        <h3>Draw a name from {{roomName}} hat.</h3>
+        Enter your name: <input v-model="inputGetName">
+        <button v-on:click="getNameFromHat()">Get Name From Hat</button>
+      </div>
+
+      <div v-if="state == 'sendLink'" class="name-found view">
+        <h3> Here's the name you drew </h3>
+        <h4>{{nameDrawn}}</h4>
+        <h3>Now give this link to {{personNext}}</h3>
+        <a v-bind:href="link">{{link}}</a>
+      </div>
+
+      <div v-if="state == 'nameNotInHat'" class="bad-name view">
+        <h3> Sorry, but your name is not in the hat. Try a different name?</h3>
+        <button v-on:click="state=states[1]">Try Again</button>
+      </div>
+
+      <div v-if="state == 'youreNotNext'" class="wrong-turn view">
+        <h3> Its not your turn! Send this link to {{personNext}}.</h3>
+        <a v-bind:href="link">{{link}}</a>  
+      </div>
+
+      <div v-if="state == 'emptyHat'" class="wrong-turn view">
+        <h3> The hat is empty! The original names in the hate were:</h3>
+        <ul>
+          <li v-for="name in originNamesInHat">
+            {{name}}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
+
+<!-- STYLES -->
+<style>
+
+</style>
+
+<!-- SCRIPT -->
+<script>
+var states = ["create", "getName", "sendLink", "nameNotInHat", "youreNotNext", "listMade", "emptyHat"];
+
+var search = top.window.location.search;
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    state: states[0],
+    nameOfHat: "",
+    personNext: "",
+    link: "this.url+theencodedstuff",
+    originNamesInHat: [],
+    namesInHat: [],
+    nameDrawn: "",
+    inputNameAdd: "",
+    inputGetName: "",
+  },
+  methods: {
+    addNameToHat() {
+      if(this.inputNameAdd){
+        this.namesInHat.push(this.inputNameAdd);
+        this.originNamesInHat.push(this.inputNameAdd);
+        this.inputNameAdd="";
+      }
+    },
+    drawName() {
+      var randomIdx = getRandomInt(this.namesInHat.length);
+      var drawnName = this.namesInHat[randomIdx];
+      if(drawnName == this.inputGetName) {
+        this.drawName();
+      } else {
+        this.nameDrawn = drawnName; 
+        // remove name
+      }
+    },
+    generateNextLink() {
+      var dto = {
+        personNext: this.personNext,
+        originNamesInHat: this.originNamesInHat,
+        namesInHat: this.namesInHat
+      };
+      var encoded = encodedJson(dto);
+      this.link = location.href + "?=" + encoded;
+      if(namesInHat.length == 0)
+        this.state = states[6];
+    },
+    getNameFromHat() {
+      var inNameExists = this.originNamesInHat.find(name=> name == this.inputGetName);
+      var isNext = this.personNext == inNameExists;
+      if(inNameExists && isNext) {
+        this.state = states[2];
+        this.drawName();
+        this.generateNextLink();
+      } else if(!inNameExists) {
+        this.state = states[3];
+      } else {
+        this.state = states[4]
+      }
+    },
+    generateHat() {
+      this.state=states[5];
+      // select random name in hat for first person
+      // generate link with seralized dto
+    }
+  }
+})
   
-  <div v-if="state == 'create'" class="create-list view">
-    <h3>Name your hat</h3>
-    <input v-model="nameOfHat"></input>
-    <h3>Add names to your hat.</h3>
-    Name: 
-    <input v-model="inputNameAdd" id="name">
-    <button v-on:click="addNameToHat()">Add</button>
-    </br>
-    <ul>
-      <li v-for="name in namesInHat">
-        {{name}}
-      </li>
-    </ul>
-    <button v-on:click="generateHat()">Finish</button>
-  </div>
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+  
+function decodedJson( object ) {
+  var decode = window.atob(object);
+  return JSON.parse(decode);
+}
 
-  <div v-if="state == 'listMade'" class="send-list view">
-    <h3>Your list is ready to go. To start it off, send this link to {{personNext }}</h3>
-    <a v-bind:href="link">{{link}}</a>  
-  </div>
+function encodedJson( object ) {
+  var encode = JSON.stringify(object);
+  return window.btoa(encode);
+}
+</script>
 
-  <div v-if="state == 'getName'" class="get-name view">
-    <h3>Draw a name from {{roomName}} hat.</h3>
-    Enter your name: <input v-model="inputGetName">
-    <button v-on:click="getNameFromHat()">Get Name From Hat</button>
-  </div>
 
-  <div v-if="state == 'sendLink'" class="name-found view">
-    <h3> Here's the name you drew </h3>
-    <h4>{{nameDrawn}}</h4>
-    <h3>Now give this link to {{personNext}}</h3>
-    <a v-bind:href="link">{{link}}</a>
-  </div>
-
-  <div v-if="state == 'nameNotInHat'" class="bad-name view">
-    <h3> Sorry, but your name is not in the hat. Try a different name?</h3>
-    <button v-on:click="state=states[1]">Try Again</button>
-  </div>
-
-  <div v-if="state == 'youreNotNext'" class="wrong-turn view">
-    <h3> Its not your turn! Send this link to {{personNext}}.</h3>
-    <a v-bind:href="link">{{link}}</a>  
-  </div>
-
-  <div v-if="state == 'emptyHat'" class="wrong-turn view">
-    <h3> The hat is empty! The original names in the hate were:</h3>
-    <ul>
-      <li v-for="name in originNamesInHat">
-        {{name}}
-      </li>
-    </ul>
-  </div>
-</div>
