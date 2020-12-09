@@ -141,8 +141,8 @@ var app = new Vue({
       this.link = location.origin + location.pathname + "?hat=" + hatEncoded;
     },
     getNameFromHat() {
-      var inNameExists = this.originNamesInHat.find(name=> name == this.inputGetName);
-      var isNext = this.namesToDraw[0] == inNameExists;
+      var inNameExists = this.originNamesInHat.find(name=> name.toLowerCase() == this.inputGetName.toLowerCase());
+      var isNext = this.namesToDraw[0].toLowerCase() == inNameExists.toLowerCase();
       if(inNameExists && isNext) {
         this.drawName();
         this.generateNextLink();
