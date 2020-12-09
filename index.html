@@ -200,14 +200,20 @@ function randomizeList(array) {
     height: 100%;
     background-repeat: no-repeat;
   }
+  a {
+    display: inline-block;
+    word-break: break-all; 
+  }
   
-  .app {
+  #app {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
   .view {
+    max-width: 80vw;
     padding: 10px;
     background: #fff;
   }
