@@ -51,6 +51,8 @@
       </div>
 
       <div v-if="state == 'emptyHat'" class="wrong-turn view">
+        <h3> Here's the name you drew </h3>
+        <h4>{{nameDrawn}}</h4>
         <h3> The hat is empty! The original names in the hate were:</h3>
         <ul>
           <li v-for="name in originNamesInHat">
@@ -146,7 +148,11 @@ var app = new Vue({
       if(inNameExists && isNext) {
         this.drawName();
         this.generateNextLink();
-        this.state = states[2];
+        if(this.namesToDraw.length > 0) {
+          this.state = states[2];
+        } else {
+          this.state = states[6];
+        }
       } else if(!inNameExists) {
         this.state = states[3];
       } else {
