@@ -95,6 +95,7 @@ var states = ["create", "getName", "sendLink", "nameNotInHat", "youreNotNext", "
 var app = new Vue({
   el: '#app',
   data: {
+    states: states,
     state: hatDecoded ? states[1] : states[0],
     nameOfHat: "",
     personNext: hatDecoded && hatDecoded.personNext ? hatDecoded.personNext : "",
