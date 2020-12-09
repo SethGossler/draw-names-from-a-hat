@@ -69,6 +69,7 @@
 var states = ["create", "getName", "sendLink", "nameNotInHat", "youreNotNext", "listMade", "emptyHat"];
 
 var search = top.window.location.search;
+var hatEncoded = search.get("hat");
 
 var app = new Vue({
   el: '#app',
