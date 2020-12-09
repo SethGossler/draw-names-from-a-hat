@@ -13,6 +13,7 @@
         <h3>Add names to your hat.</h3>
         <input v-model="inputNameAdd" id="name"><button v-on:click="addNameToHat()">Add</button>
         </br>
+        <i>-------------------</i>
         <h3> Names Added </h3>
         <ul>
           <li v-for="name in namesInHat">
@@ -28,15 +29,15 @@
       </div>
 
       <div v-if="state == 'getName'" class="get-name view">
-        <h3>Draw a name from {{nameOfHat}} hat.</h3>
+        <h3>Draw a name from hat: {{nameOfHat}} .</h3>
         Enter your name: <input v-model="inputGetName">
         <button v-on:click="getNameFromHat()">Get Name From Hat</button>
       </div>
 
       <div v-if="state == 'sendLink'" class="name-found view">
-        <h3> Here's the name you drew </h3>
+        <h3> Here's the name you drew: </h3>
         <h4>{{nameDrawn}}</h4>
-        <h3>Now give this link to {{namesToDraw[0]}}</h3>
+        <h3>Now give this link to person: {{namesToDraw[0]}}</h3>
         <a v-bind:href="link">{{link}}</a>
       </div>
 
@@ -53,7 +54,7 @@
       <div v-if="state == 'emptyHat'" class="wrong-turn view">
         <h3> Here's the name you drew </h3>
         <h4>{{nameDrawn}}</h4>
-        <h3> The hat is empty! The original names in the hate were:</h3>
+        <h3> The hat is empty! The original names in the hat were:</h3>
         <ul>
           <li v-for="name in originNamesInHat">
             {{name}}
