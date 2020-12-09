@@ -68,9 +68,8 @@
 <script>
 var states = ["create", "getName", "sendLink", "nameNotInHat", "youreNotNext", "listMade", "emptyHat"];
 
-var params = new URLSearchParams(top.window.location.search);
+var params = new URLSearchParams(window.location.search);
 var hatEncoded = params.get("hat");
-console.log(hatEncoded);
   
 var app = new Vue({
   el: '#app',
@@ -100,7 +99,7 @@ var app = new Vue({
         this.drawName();
       } else {
         this.nameDrawn = drawnName; 
-        // remove name
+        this.namesInHat.splice(randomIdx, 1);
       }
     },
     generateNextLink() {
@@ -111,16 +110,14 @@ var app = new Vue({
       };
       var encoded = encodedJson(dto);
       this.link = location.href + "?=" + encoded;
-      if(namesInHat.length == 0)
-        this.state = states[6];
     },
     getNameFromHat() {
       var inNameExists = this.originNamesInHat.find(name=> name == this.inputGetName);
       var isNext = this.personNext == inNameExists;
       if(inNameExists && isNext) {
-        this.state = states[2];
         this.drawName();
         this.generateNextLink();
+        this.state = states[2];
       } else if(!inNameExists) {
         this.state = states[3];
       } else {
@@ -128,9 +125,10 @@ var app = new Vue({
       }
     },
     generateHat() {
+      var randomIdx = getRandomInt(this.namesInHat.length);
+      this.nextPerson = this.namesInHat[randomIdx];
+      this.generateNextLink();
       this.state=states[5];
-      // select random name in hat for first person
-      // generate link with seralized dto
     }
   }
 })
