@@ -23,7 +23,7 @@
       </div>
 
       <div v-if="state == 'listMade'" class="send-list view">
-        <h3>Your list is ready to go. To start it off, send this link to {{personNext }}</h3>
+        <h3>Your list is ready to go. To start it off, send this link to {{personNext }} (Yes, this could be you!)</h3>
         <a v-bind:href="link">{{link}}</a>  
       </div>
 
@@ -104,6 +104,7 @@ var app = new Vue({
     link: "",
     originNamesInHat: hatDecoded && hatDecoded.originNamesInHat ? hatDecoded.originNamesInHat : [],
     namesInHat: hatDecoded && hatDecoded.namesInHat ? hatDecoded.namesInHat : [],
+    namesToDraw:  hatDecoded && hatDecoded.namesToDraw ? hatDecoded.namesToDraw : [],
     nameDrawn: "",
     inputNameAdd: "",
     inputGetName: "",
@@ -118,12 +119,17 @@ var app = new Vue({
     },
     drawName() {
       var randomIdx = getRandomInt(this.namesInHat.length);
+      if(this.namesToDraw.length == this.originNamesInHat.length) {
+        randomIdx = 0; // get rid of "lone last person" problem algorithm
+      }
+      
       var drawnName = this.namesInHat[randomIdx];
       if(drawnName == this.inputGetName) {
         this.drawName();
-      } else {
+      { else {
         this.nameDrawn = drawnName; 
         this.namesInHat.splice(randomIdx, 1);
+        this.namesToDraw.splice(0,1);
       }
     },
     generateNextLink() {
@@ -131,7 +137,8 @@ var app = new Vue({
         nameOfHat: this.nameOfHat,
         personNext: this.personNext,
         originNamesInHat: this.originNamesInHat,
-        namesInHat: this.namesInHat
+        namesInHat: this.namesInHat,
+        namesToDraw: this.namesToDraw
       };
       var hatEncoded = encodedJson(dto);
       this.link = location.origin + location.pathname + "?hat=" + hatEncoded;
@@ -151,14 +158,36 @@ var app = new Vue({
     },
     generateHat() {
       var randomIdx = getRandomInt(this.namesInHat.length);
-      this.personNext = this.namesInHat[randomIdx];
+      
+      this.namesInHat = randomizeList(this.namesInHat);
+      this.namesToDraw = namesInHat.slice().reverse();
+      
+      this.personNext = this.namesToDraw[0];
       this.generateNextLink();
+      
       this.state=states[5];
     }
   }
 })
   
+function randomizeList(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
 
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
 
 </script>
 
