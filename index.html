@@ -67,9 +67,6 @@
 <!-- SCRIPT -->
 <script>
 var states = ["create", "getName", "sendLink", "nameNotInHat", "youreNotNext", "listMade", "emptyHat"];
-
-var params = new URLSearchParams(window.location.search);
-var hatEncoded = params.get("hat");
   
 var app = new Vue({
   el: '#app',
@@ -146,6 +143,13 @@ function encodedJson( object ) {
   var encode = JSON.stringify(object);
   return window.btoa(encode);
 }
+
+var params = new URLSearchParams(window.location.search);
+var hatEncoded = params.get("hat");
+var hatDecoded = decodedJson(hatEncoded);
+
+console.log(hatDecoded);
+
 </script>
 
 <!-- end -->
