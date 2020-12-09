@@ -23,7 +23,7 @@
       </div>
 
       <div v-if="state == 'listMade'" class="send-list view">
-        <h3>Your list is ready to go. To start it off, send this link to {{namesToDraw[0]; }} (Yes, this could be you!)</h3>
+        <h3>Your list is ready to go. To start it off, send this link to {{namesToDraw[0]}} (Yes, this could be you!)</h3>
         <a v-bind:href="link">{{link}}</a>  
       </div>
 
@@ -36,7 +36,7 @@
       <div v-if="state == 'sendLink'" class="name-found view">
         <h3> Here's the name you drew </h3>
         <h4>{{nameDrawn}}</h4>
-        <h3>Now give this link to {{namesToDraw[0];}}</h3>
+        <h3>Now give this link to {{namesToDraw[0]}}</h3>
         <a v-bind:href="link">{{link}}</a>
       </div>
 
@@ -46,7 +46,7 @@
       </div>
 
       <div v-if="state == 'youreNotNext'" class="wrong-turn view">
-        <h3> Its not your turn! Send this link to {{namesToDraw[0];}}.</h3>
+        <h3> Its not your turn! Send this link to {{namesToDraw[0]}}.</h3>
         <a v-bind:href="link">{{link}}</a>  
       </div>
 
