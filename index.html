@@ -142,7 +142,7 @@ var app = new Vue({
     },
     getNameFromHat() {
       var inNameExists = this.originNamesInHat.find(name=> name.toLowerCase() == this.inputGetName.toLowerCase());
-      var isNext = this.namesToDraw[0].toLowerCase() == inNameExists.toLowerCase();
+      var isNext = inNameExists && inNameExists.toLowerCase() == this.namesToDraw[0].toLowerCase();
       if(inNameExists && isNext) {
         this.drawName();
         this.generateNextLink();
