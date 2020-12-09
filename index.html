@@ -126,7 +126,7 @@ var app = new Vue({
       var drawnName = this.namesInHat[randomIdx];
       if(drawnName == this.inputGetName) {
         this.drawName();
-      { else {
+      } else {
         this.nameDrawn = drawnName; 
         this.namesInHat.splice(randomIdx, 1);
         this.namesToDraw.splice(0,1);
