@@ -160,7 +160,7 @@ var app = new Vue({
       var randomIdx = getRandomInt(this.namesInHat.length);
       
       this.namesInHat = randomizeList(this.namesInHat);
-      this.namesToDraw = namesInHat.slice().reverse();
+      this.namesToDraw = this.namesInHat.slice().reverse();
       
       this.personNext = this.namesToDraw[0];
       this.generateNextLink();
