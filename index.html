@@ -230,6 +230,8 @@ function randomizeList(array) {
     max-width: 80vw;
     padding: 10px 30px 30px 30px;
     background: #fff;
+    box-shadow: 0px 0px 8px #fff;
+    border-radius: 5px;
   }
   
   .snow-layer {
@@ -249,16 +251,34 @@ function randomizeList(array) {
   }
 
   .snow-layer:before {
+    content: "";
     filter: blur(6px);
     opacity: 0.8;
   }
   
   .snow-layer:after {
+     content: "";    
     filter: blur(1px);
     top: -1500%;
     background-image: url(http://www.freepngimg.com/download/winter_snow/4-2-white-snow-png.png);
     background-size: 90%;
     animation-duration: 200s;
+  }
+  
+  input {
+    border-radius: 4px;
+    border-style: solid;
+    border-color: #949494;
+  }
+  
+  button {
+    background: #3593c4;
+    color: #fff;
+    border: none;
+    padding: 3px 8px;
+    border-radius: 3px;
+    box-shadow: 0px 0px 2px #000;
+    margin-left: 4px;
   }
 
   @-webkit-keyframes MOVE-BG {
