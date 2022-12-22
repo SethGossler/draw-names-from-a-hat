@@ -140,7 +140,7 @@ var app = new Vue({
         this.namesToDraw.splice(0,1);
       }
       
-      window.localStorage.setItem('nameDrawn',nameDrawn);
+      window.localStorage.setItem('nameDrawn', this.nameDrawn);
     },
     generateNextLink() {
       var dto = {
