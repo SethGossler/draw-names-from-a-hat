@@ -91,10 +91,10 @@ if(hatEncoded) {
   window.localStorage.setItem('originalJWT', hatEncoded);
 }
 
-let prevNextJWT = Storage.getItem('nextJWT');
-let prevNameDrawn = Storage.getItem('nameDrawn');
+let prevNextJWT = window.localStorage.getItem('nextJWT');
+let prevNameDrawn = window.localStorage.getItem('nameDrawn');
 // Vue Start  
-getStartState() {
+function getStartState() {
   var state = hatDecoded ? states[1] : states[0];
   if (prevNextJWT && prevNameDrawn) {
     hatDecoded = decodedJson(prevNextJWT);
