@@ -38,7 +38,7 @@
         <h3> Here's the name you drew: </h3>
         <h4>{{nameDrawn}}</h4>
         <h3>Now give this link to person: {{namesToDraw[0]}}</h3>
-        <a v-bind:href="link">{{link}}</a>
+        <a v-bind:href="link">{{generateNextLink()}}</a>
       </div>
 
       <div v-if="state == 'nameNotInHat'" class="bad-name view">
